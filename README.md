@@ -1,7 +1,6 @@
-Writing an <code>InputStream</code> (<a href="http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html" target="_blank">Java Doc</a>) to a <code>RandomAccessFile</code> (<a href="http://docs.oracle.com/javase/7/docs/api/java/io/RandomAccessFile.html" target="_blank">Java Doc</a>) is quite simple as shown in the following example.  This example also makes use of <code>FileLock</code> (<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/FileLock.html" target="_blank">Java Doc</a>) to make sure that no one modifies the file while the data is being written to file.
+Writing an `InputStream` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html)) to a `RandomAccessFile` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/io/RandomAccessFile.html)) is quite simple as shown in the following example.  This example also makes use of `FileLock` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/nio/channels/FileLock.html)) to make sure that no one modifies the file while the data is being written to file.
 
-
-<pre>
+```java
 package com.javacreed.examples.io;
 
 import java.io.BufferedInputStream;
@@ -20,7 +19,7 @@ public class Example {
     try (RandomAccessFile raf = new RandomAccessFile(outputFile, "rw"); FileChannel fc = raf.getChannel();) {
       final FileLock fl = fc.tryLock();
       if (fl == null) {
-        // Failed to acquire lock
+        /* Failed to acquire lock */
       } else {
         try (final ReadableByteChannel in = Channels.newChannel(new BufferedInputStream(Example.class
             .getResourceAsStream("/remote.data")))) {
@@ -36,7 +35,6 @@ public class Example {
     }
   }
 }
-</pre>
+```
 
-
-This example also makes use of <code>ByteBuffer</code> (<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html" target="_blank">Java Doc</a>) to store the data read from the <code>InputStream</code> and then written to the file.
+This example also makes use of `ByteBuffer` ([Java Doc](http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html)) to store the data read from the `InputStream` and then written to the file.  The code shown in this example can be downloaded from [https://github.com/javacreed/how-to-write-inputstream-to-randomaccessfile](https://github.com/javacreed/how-to-write-inputstream-to-randomaccessfile).

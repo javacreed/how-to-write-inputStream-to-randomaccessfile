@@ -16,10 +16,10 @@ public class Example {
     try (RandomAccessFile raf = new RandomAccessFile(outputFile, "rw"); FileChannel fc = raf.getChannel();) {
       final FileLock fl = fc.tryLock();
       if (fl == null) {
-        // Failed to acquire lock
+        /* Failed to acquire lock */
       } else {
         try (final ReadableByteChannel in = Channels.newChannel(new BufferedInputStream(Example.class
-            .getResourceAsStream("/remote.data")))) {
+                                                                                                     .getResourceAsStream("/remote.data")))) {
           for (final ByteBuffer buffer = ByteBuffer.allocate(1024); in.read(buffer) != -1;) {
             buffer.flip();
             fc.write(buffer);
